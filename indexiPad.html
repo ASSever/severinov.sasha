@@ -1,0 +1,168 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <meta charset="utf-8"> 
+    <title>Часы</title> 
+    <script type="text/javascript"> 
+    function Clock(){ 
+    var canvas = document.getElementById("sandbox"); 
+    var context = canvas.getContext("2d"); 
+    //координаты лежащие на окружности 
+    var x1,y1; 
+    //координаты лежащие в окружности 
+    var x2, y2; 
+    //коэффицент 
+    var k = 17/18; 
+    //угол 
+    var alfa; 
+    //радиус часов 
+    var R = 200; 
+    //создание обьекта 
+    var line = new Path2D(); 
+    var line1 = new Path2D();   
+    var line2 = new Path2D();   
+    var line3 = new Path2D();   
+    var line4 = new Path2D(); 
+     context.clearRect(0,0,2*R,2*R); 
+    //задаем цвет 
+    context.strokeStyle= "black"; 
+    line4.arc(R,R,R,0,Math.PI*2); 
+ 
+    //отрисовываем минуты 
+ 
+    //задаем цвет контура
+    context.strokeStyle= "#c0c0c0"; 
+    //задаем толщину линии 
+    context.lineWidth = 2; 
+    for (var d = 0; d < 60; d++) { 
+        alfa= d*Math.PI/30; 
+        x1=R*Math.cos(alfa); 
+        y1=R*Math.sin(alfa); 
+        x2=x1*k; 
+        y2=y1*k; 
+        x1=x1+R; 
+        y1=y1+R; 
+        x2=x2+R; 
+        y2=y2+R; 
+ 
+        line4.moveTo(x1,y1); 
+        line4.lineTo(x2,y2); 
+    } 
+    //обводим контур 
+    context.stroke(line4); 
+ 
+    //отрисовываем часы 
+ 
+    //задаем цвет контура
+    context.strokeStyle= "#000000"; 
+    //задаем толщину линии 
+    context.lineWidth = 3; 
+    k=8/9; 
+    for (var d = 0; d < 12; d++) { 
+        alfa= d*Math.PI/6; 
+        x1=R*Math.cos(alfa); 
+        y1=R*Math.sin(alfa); 
+        x2=x1*k; 
+        y2=y1*k; 
+        x1=x1+R; 
+        y1=y1+R; 
+        x2=x2+R; 
+        y2=y2+R; 
+ 
+        line3.moveTo(x1,y1); 
+        line3.lineTo(x2,y2); 
+    } 
+    //обводим контур 
+    context.stroke(line3); 
+ 
+    //setTimeout(Time,0); 
+    //alert("Функция Clock работает"); 
+            //Date() используем для определения реальных даты и времени 
+        var date = new Date(); 
+        var s, sAngle;//секунды и их угол 
+        var m, mAngle;//минуты и их угол 
+        var h, hAngle;//часы и их угол 
+        s=date.getSeconds(); 
+        m=date.getMinutes(); 
+        h=date.getHours(); 
+        //console.log(s,m,h); 
+        sAngle=Math.PI*2*s/60-Math.PI/2; 
+        mAngle=Math.PI*2*m/60-Math.PI/2; 
+        hAngle=Math.PI*2*(h%12)/12-Math.PI/2;
+        //часовая стрелка
+        //задаем цвет контура
+        context.strokeStyle= "green";
+        //задаем толщину линии 
+        context.lineWidth = 7; 
+        x1=(R*0.5)*Math.cos(hAngle); 
+        y1=(R*0.5)*Math.sin(hAngle); 
+        x1=x1+R; 
+        y1=y1+R; 
+        x2=x2+R; 
+        y2=y2+R; 
+ 
+        line2.moveTo(x1,y1); 
+        line2.lineTo(R,R); 
+         
+        context.stroke(line2);  
+        //минутная стрелка
+        //задаем цвет контура
+        context.strokeStyle= "yellow";
+        //задаем толщину линии 
+        context.lineWidth = 5; 
+        x1=(R*0.8)*Math.cos(mAngle); 
+        y1=(R*0.8)*Math.sin(mAngle); 
+        x1=x1+R; 
+        y1=y1+R; 
+        x2=x2+R; 
+        y2=y2+R; 
+ 
+        line1.moveTo(x1,y1); 
+        line1.lineTo(R,R); 
+         
+        context.stroke(line1); 
+
+        //секундная стрелка
+        //задаем цвет контура
+        context.strokeStyle= "red"; 
+        //задаем толщину линии 
+        context.lineWidth = 2; 
+        x1=R*Math.cos(sAngle); 
+        y1=R*Math.sin(sAngle); 
+        x1=x1+R; 
+        y1=y1+R; 
+        x2=x2+R; 
+        y2=y2+R; 
+ 
+        line.moveTo(x1,y1); 
+        line.lineTo(R,R); 
+         
+        context.stroke(line);  
+        setTimeout(Clock,1000); 
+ 
+    } 
+    //вызывает функцию сразу после загрузки страницы 
+    document.addEventListener("DOMContentLoaded",Clock); 
+    </script> 
+    <style type="text/css"> 
+        canvas{ 
+            border: 1px solid black; 
+        html, body{ 
+            height: 100%; 
+            margin: 0; 
+        } 
+        body{ 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+        } 
+ 
+    </style> 
+</head> 
+<!--тоже вызывает функцию при загрузке страницы--> 
+<!--<body onload="testCanvas();">--> 
+<body> 
+ 
+<canvas id="sandbox" width= "400" height="400"></canvas> 
+</body> 
+</html>
